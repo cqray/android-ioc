@@ -1,7 +1,5 @@
 package cn.cqray.android.ioc;
 
-import android.util.Log;
-
 import java.lang.reflect.Field;
 import java.util.List;
 
