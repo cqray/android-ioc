@@ -2,7 +2,7 @@ package cn.cqray.android.ioc.annotation;
 
 public class Test11 {
 
-    public static String tt9 = "666";
-
+    private String tt9 = "666";
+    public final String tt92 = "666";
     public String text = "111";
 }

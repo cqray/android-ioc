@@ -7,11 +7,4 @@ public class T {
     @Inject
     public Integer tt;
 
-//    private T() {
-//
-//    }
-
-    T(int i) {
-
-    }
 }

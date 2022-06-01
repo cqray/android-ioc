@@ -37,17 +37,19 @@ public class AndroidIoc {
     }
 
     @NonNull
-    public static AndroidIoc with(Class<?> cls) {
-        Class<?> [] modules = null;
-        if (cls != null) {
-            Component component = cls.getAnnotation(Component.class);
-            if (component != null) {
-                System.out.println(component.modules());
-                modules = component.modules();
-            }
-        }
-        return new AndroidIoc(modules);
+    public static ModuleFactory with(Class<?>... classes) {
+//        Class<?> [] modules = null;
+//        if (cls != null) {
+//            Component component = cls.getAnnotation(Component.class);
+//            if (component != null) {
+//                System.out.println(component.modules());
+//                modules = component.modules();
+//            }
+//        }
+        return new ModuleFactory(classes);
     }
+
+
 
     public void inject(Object target) {
         if (target != null) {
