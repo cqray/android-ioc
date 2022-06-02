@@ -14,13 +14,13 @@ import cn.cqray.android.ioc.annotation.Component;
 import cn.cqray.android.ioc.annotation.Inject;
 import cn.cqray.android.ioc.annotation.Provides;
 
-public class AndroidIoc {
+public class Ioc {
 
     private final Map<Class<?>, Object> MODULE_MAP = new ConcurrentHashMap<>();
 
     private Class<?> [] mModules;
 
-    private AndroidIoc(Class<?>[] modules) {
+    private Ioc(Class<?>[] modules) {
         mModules = modules;
         if (modules != null) {
             for (Class<?> module : modules) {

@@ -18,7 +18,10 @@ public class CheckUtils {
     private static final String EXCEPTION_FOR_METHOD = "Provides method %s can not be %s.";
     private static final String EXCEPTION_FOR_CONSTRUCTOR = "%s requires a non private parameterless constructor.";
 
-
+    /**
+     * 检查是否有非私有无参构造函数
+     * @param cls Class
+     */
     public static void checkConstructor(@NonNull Class<?> cls) {
         Constructor<?>[] constructors = cls.getDeclaredConstructors();
         boolean hasNoParameterConstructor = false;

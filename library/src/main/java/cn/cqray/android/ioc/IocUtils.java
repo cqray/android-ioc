@@ -18,8 +18,8 @@ import cn.cqray.android.ioc.annotation.Provides;
 public class IocUtils {
 
 
-    public static List<ModuleProvider> getProviderFromComponents(Class<?>[] components) {
-        List<ModuleProvider> providers = new ArrayList<>();
+    public static List<ModuleBuilder> getProviderFromComponents(Class<?>[] components) {
+        List<ModuleBuilder> providers = new ArrayList<>();
         for (Class<?> component : components) {
             Component com = component.getAnnotation(Component.class);
             if (com != null) {
@@ -30,19 +30,19 @@ public class IocUtils {
     }
 
     @NonNull
-    static List<ModuleProvider> getProviderFromModules(Class<?>[] classes) {
-        List<ModuleProvider> list = new ArrayList<>();
+    static List<ModuleBuilder> getProviderFromModules(Class<?>[] classes) {
+        List<ModuleBuilder> list = new ArrayList<>();
         if (classes != null) {
             for (Class<?> cls : classes) {
                 Module module = cls.getAnnotation(Module.class);
                 if (module != null) {
-                    ModuleProvider provider = new ModuleProvider(cls);
+                    ModuleBuilder provider = new ModuleBuilder(cls);
                     list.add(provider);
                 }
             }
-            Collections.sort(list, new Comparator<ModuleProvider>() {
+            Collections.sort(list, new Comparator<ModuleBuilder>() {
                 @Override
-                public int compare(ModuleProvider o1, ModuleProvider o2) {
+                public int compare(ModuleBuilder o1, ModuleBuilder o2) {
                     return o1.getInjectFieldCount() - o2.getInjectFieldCount();
                 }
             });
@@ -50,22 +50,16 @@ public class IocUtils {
         return list;
     }
 
-    public static List<Field> getInjectFields(Object target) {
-        List<Field> list = new ArrayList<>();
-        if (target != null) {
-            return null;
-        }
-        return list;
-    }
-
     @NonNull
-    public static List<Method> getProvidesMethods(Class<?> module) {
+    public static List<Method> getProvidesMethods(@NonNull Class<?> cls) {
         List<Method> list = new ArrayList<>();
-        Method[] methods = module.getDeclaredMethods();
+        Method[] methods = cls.getDeclaredMethods();
         for (Method method : methods) {
             Provides provides = method.getAnnotation(Provides.class);
             if (provides != null) {
+                // 检查是否是符合规范的注解
                 CheckUtils.checkProvidesMethod(method);
+                // 加入列表
                 list.add(method);
             }
         }
@@ -78,18 +72,17 @@ public class IocUtils {
      * @return 属性字段列表
      */
     @NonNull
-    public static List<Field> getInjectFields(Class<?> cls) {
+    public static List<Field> getInjectFields(@NonNull Class<?> cls) {
         List<Field> list = new ArrayList<>();
-        if (cls != null) {
-            Field[] fields = cls.getDeclaredFields();
-            for (Field field : fields) {
-                Inject inject = field.getAnnotation(Inject.class);
-                if (inject != null) {
-                    CheckUtils.checkInjectFiled(field);
-                    list.add(field);
-                }
+        Field[] fields = cls.getDeclaredFields();
+        for (Field field : fields) {
+            Inject inject = field.getAnnotation(Inject.class);
+            if (inject != null) {
+                // 检查是否是符合规范的注解
+                CheckUtils.checkInjectFiled(field);
+                // 加入列表
+                list.add(field);
             }
-            return list;
         }
         return list;
     }

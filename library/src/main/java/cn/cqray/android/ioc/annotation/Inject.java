@@ -12,4 +12,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target({ METHOD, CONSTRUCTOR, FIELD })
 @Retention(RUNTIME)
 @Documented
-public @interface Inject {}
+public @interface Inject {
+
+    String name() default "";
+}
